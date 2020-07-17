@@ -138,7 +138,7 @@ local function worker(args)
     local cpu_widget = wibox.container.margin(wibox.container.mirror(cpugraph_widget, { horizontal = true }), 0, 0, 0, 2)
 
     local cpus = {}
-    watch([[bash -c 'cat /proc/stat | grep "^cpu." ; top -b -n1 -o +%CPU -c -w 512 | awk '\''NR<8{next}NR>17{exit}{c="";for(i=12;i<=NF;i++){c=c$i" "};sub(".*/","",$12);print $1"|"$12"|"$9"|"$10"|"c}'\''']], 1,
+    watch([[bash -c 'cat /proc/stat | grep "^cpu." ; top -b -n1 -o +%CPU -c -w 512 | awk '\''NR<8{next}NR>17{exit}{c="";for(i=12;i<=NF;i++){c=c$i" "};sub("^[^[].*/","",$12);print $1"|"$12"|"$9"|"$10"|"c}'\''']], 1,
             function(widget, stdout)
                 local i = 1
                 local j = 1
